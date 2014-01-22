@@ -7,6 +7,9 @@ module TranscoderProcessor
 
       include Sidekiq::Worker
 
+      QUEUE_NAME = :high
+      sidekiq_options :queue => QUEUE_NAME
+
       def perform media_file_id
         media_file = TranscoderProcessor::Models::MediaFile.find(id: media_file_id)
 

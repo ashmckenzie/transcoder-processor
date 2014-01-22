@@ -16,6 +16,9 @@ module TranscoderProcessor
         exit_code = $?
         media_file.update(finished_processing_at: Time.now)
 
+        # FIXME: this isn't great
+        media_file.update(status: :complete, job_exit_code: exit_code, job_output: output)
+
         Response.new(output, exit_code)
       end
 
