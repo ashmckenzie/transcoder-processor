@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="span12 text-center dropdown nogutter">
+
+    <h2>Transcodable Media</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Size</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%- @data.files.each do |file| %>
+          <tr>
+            <td><%= file.filename %></td>
+            <td><%= file.size %></td>
+            <td><%= file.status.current %></td>
+            <td class="span1">
+              <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="transcode">Transcode</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" class="delete">Delete</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        <%- end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  window.bootstrapData = <%= @data.bootstrap_data %>;
+</script>

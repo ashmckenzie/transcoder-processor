@@ -1,0 +1,7 @@
+.DS_Store
+tmp/
+log/
+config/config.yml
+vendor
+.bundle
+.rbenv-version
