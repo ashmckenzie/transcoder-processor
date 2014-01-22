@@ -1,0 +1,11 @@
+---
+:verbose: true
+:concurrency: 2
+:queues:
+  - [high, 7]
+  - [default, 5]
+  - [low, 3]
+:limits:
+  high: 1
+  default: 1
+  low: 1
