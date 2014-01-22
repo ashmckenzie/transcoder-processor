@@ -11,15 +11,28 @@ module TranscoderProcessor
       end
 
       def execute!
-        media_file.update(started_processing_at: Time.now)
+        # FIXME: this isn't great
+        media_file.update(
+          status:                 Status::WORKING,
+          started_processing_at:  Time.now
+        )
+
         output = `#{command}`
         exit_code = $?
-        media_file.update(finished_processing_at: Time.now)
+
+        response = Response.new(output, exit_code)
 
         # FIXME: this isn't great
-        media_file.update(status: :complete, job_exit_code: exit_code, job_output: output)
+        status = response.success? ? Status::SUCCESSFUL : Status::FAILED
 
-        Response.new(output, exit_code)
+        media_file.update(
+          status:                 status,
+          job_exit_code:          exit_code,
+          job_output:             output,
+          finished_processing_at: Time.now
+        )
+
+        response
       end
 
       private

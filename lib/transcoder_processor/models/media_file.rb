@@ -1,11 +1,14 @@
 # TranscoderProcessor::Database.instance.connection.create_table :media_files do
 #   primary_key :id
+
 #   String :input_file
 #   Bignum :input_file_size
 #   String :output_file
 #   Bignum :output_file_size, default: 0
-#   String :status
+#   String :status, default: 'nothing'
 #   String :job_id
+#   String :job_output
+#   Integer :job_exit_code
 #   DateTime :created_at
 #   DateTime :updated_at
 #   DateTime :started_processing_at
@@ -16,16 +19,16 @@ require 'pathname'
 require 'naught'
 require 'time_diff'
 
-require 'media/status'
-
 module TranscoderProcessor
   module Models
     class MediaFile < Sequel::Model
 
+      # VALIDATIONS HERE
+
       plugin :timestamps, :update_on_create => true
 
       def status
-        Media::Status.new(job_id)
+        Status.new(self[:status].to_sym)
       end
 
       def processing_time
@@ -64,8 +67,10 @@ module TranscoderProcessor
         )
 
         if job_id = Workers::TranscoderWorker.perform_async(record.id)
-          record.job_id = job_id
-          record.save
+          record.update(
+            status: Status::ENQUEUED,
+            job_id: job_id
+          )
         else
           raise 'Ruh roh'
         end
@@ -76,7 +81,7 @@ module TranscoderProcessor
       config.mimic MediaFile
 
       def status
-        Media::StatusNull.new
+        Status.new
       end
     end
   end

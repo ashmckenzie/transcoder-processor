@@ -1,12 +1,10 @@
 require 'sidekiq'
-require 'sidekiq-status'
 
 module TranscoderProcessor
   module Workers
     class TranscoderWorker
 
       include Sidekiq::Worker
-      include Sidekiq::Status::Worker
 
       QUEUE_NAME = :default
       sidekiq_options :queue => QUEUE_NAME
