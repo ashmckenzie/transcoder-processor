@@ -24,9 +24,11 @@ gem 'pushover_sender', github: 'ashmckenzie/pushover-sender', branch: '4812e194c
 
 gem 'filesize'
 
+gem 'slim'
 gem 'sidekiq'
 gem 'sidekiq-status'
-gem 'slim'
+gem 'sidekiq-failures'
+gem 'sidekiq-limit_fetch'
 
 gem 'naught'
 
