@@ -84,8 +84,6 @@ GEM
       sidekiq (>= 2.9.0)
     sidekiq-limit_fetch (2.1.2)
       sidekiq (>= 2.6.5, < 3)
-    sidekiq-status (0.3.2)
-      sidekiq (~> 2.7)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -138,7 +136,6 @@ DEPENDENCIES
   sidekiq
   sidekiq-failures
   sidekiq-limit_fetch
-  sidekiq-status
   sinatra
   sinatra-contrib
   slim

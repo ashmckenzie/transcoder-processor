@@ -26,7 +26,6 @@ gem 'filesize'
 
 gem 'slim'
 gem 'sidekiq'
-gem 'sidekiq-status'
 gem 'sidekiq-failures'
 gem 'sidekiq-limit_fetch'
 
