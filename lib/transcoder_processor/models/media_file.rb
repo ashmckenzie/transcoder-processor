@@ -8,6 +8,7 @@
 #   String :output_file
 #   Bignum :output_file_size, default: 0
 #   String :status, default: 'nothing'
+#   String :job_processor
 #   String :job_id
 #   String :job_output
 #   Integer :job_exit_code
@@ -28,8 +29,8 @@ module TranscoderProcessor
       plugin :validation_helpers
       plugin :timestamps, :update_on_create => true
 
-      def self.for input_file
-        if row = find(input_file: input_file)
+      def self.for file
+        if row = find(input_file: file.file_minus_download_dir)
           row
         else
           MediaFileNull.new
@@ -70,12 +71,13 @@ module TranscoderProcessor
         end
       end
 
-      def self.transcode! input_file, output_file
+      def self.transcode! file
+        input_file = file.file_minus_download_dir
+
         unless record = find(input_file: input_file)
           record = create(
             input_file:       input_file,
-            input_file_size:  Pathname.new(input_file).size,
-            output_file:      output_file
+            input_file_size:  Pathname.new(file.file).size
           )
         end
 

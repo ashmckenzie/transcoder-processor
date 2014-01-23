@@ -1,4 +1,5 @@
 require 'pathname'
+require 'fileutils'
 
 module TranscoderProcessor
   module Media
@@ -9,11 +10,12 @@ module TranscoderProcessor
       end
 
       def command
-        %Q{HandBrakeCLI --format mkv --encoder x264 --vb 1500 --audio English --subtitle English --vfr --two-pass --turbo --input "#{media_file.input_file}" --output "#{media_file.output_file}" 2>&1}
+        %Q{HandBrakeCLI --format mkv --encoder x264 --vb 1500 --audio English --subtitle English --vfr --two-pass --turbo --input "#{full_input_file}" --output "#{output_file}" 2>&1}
       end
 
       def execute!
         register_start!
+        ensure_output_directory_exists!
         response = Executor.new(command).execute!
         register_finish!(response)
         response
@@ -23,16 +25,26 @@ module TranscoderProcessor
 
         attr_reader :media_file
 
+        def nodename
+          `uname -n`.chomp
+        end
+
+        def ensure_output_directory_exists!
+          FileUtils.mkdir_p(base_output_directory)
+        end
+
         def register_start!
           media_file.update(
             status:                 Status::WORKING,
-            started_processing_at:  Time.now
+            started_processing_at:  Time.now,
+            job_processor:          nodename,
+            output_file:            output_file
           )
         end
 
         def register_finish! response
           media_file.update(
-            output_file_size:       output_file_size,
+            output_file_size:       output_file_size(response),
             status:                 response.status,
             job_exit_code:          response.exit_code,
             job_output:             response.output,
@@ -40,7 +52,19 @@ module TranscoderProcessor
           )
         end
 
-        def output_file_size
+        def full_input_file
+          ::File.join(TranscoderProcessor::Config.instance.downloads.dir, media_file.input_file)
+        end
+
+        def output_file
+          ::File.join(TranscoderProcessor::Config.instance.downloads.tmp_dir, media_file.input_file)
+        end
+
+        def base_output_directory
+          Pathname.new(output_file).dirname
+        end
+
+        def output_file_size response
           if response.success?
             Pathname.new(media_file.output_file).size
           else

@@ -23,7 +23,6 @@ class WebApp < Sinatra::Base
 
   get '/' do
     @data = data
-    @data.bootstrap_data = bootstrap_data.to_json
 
     erb :index
   end
@@ -51,11 +50,10 @@ class WebApp < Sinatra::Base
     end
 
     def files
-      TranscoderProcessor::Media::Scanner.new(TranscoderProcessor::Config.instance.downloads.dir).find
+      TranscoderProcessor::Media::Scanner.new(download_dir).find
     end
 
-    def bootstrap_data
-      {
-      }
+    def download_dir
+      TranscoderProcessor::Config.instance.downloads.dir
     end
 end

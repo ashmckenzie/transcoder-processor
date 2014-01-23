@@ -16,16 +16,13 @@ module TranscoderProcessor
         file.basename.to_s
       end
 
-      def output_file
-        ::File.join(TranscoderProcessor::Config.instance.downloads.tmp_dir, filename)
+      def file_minus_download_dir
+        regex = Regexp.new("#{download_dir}/")
+        file.to_s.gsub(regex, '')
       end
 
       def size
         Filesize.from("#{file.size} B").pretty
-      end
-
-      def media_file
-        Models::MediaFile.for(file.to_s)
       end
 
       def status
@@ -41,8 +38,18 @@ module TranscoderProcessor
       end
 
       def transcode!
-        Models::MediaFile.transcode!(file.to_s, output_file)
+        Models::MediaFile.transcode!(self)
       end
+
+      private
+
+        def download_dir
+          TranscoderProcessor::Config.instance.downloads.dir
+        end
+
+        def media_file
+          Models::MediaFile.for(self)
+        end
     end
   end
 end
