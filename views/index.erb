@@ -23,13 +23,15 @@
             <td><%= file.started_processing_at %></td>
             <td><%= file.finished_processing_at %></td>
             <td class="span1">
-              <%- if file.status.nothing? %>
-                <div class="btn-group pull-right" data-file="<%= file.file.to_s %>">
+              <%- if file.status.changeable? %>
+                <div class="btn-group pull-right" data-file="<%= file.file.to_s %>" data-media-file-id="<%= file.media_file.id %>">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#" class="transcode">Transcode</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#" class="delete">Delete</a></li>
+                    <%- if file.status.enqueued? %>
+                      <li><a href="#" class="cancel-transcode">Cancel Transcode</a></li>
+                    <%- else %>
+                      <li><a href="#" class="transcode">Transcode</a></li>
+                    <%- end %>
                   </ul>
                 </div>
               <%- end %>

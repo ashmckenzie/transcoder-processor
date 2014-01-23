@@ -25,7 +25,11 @@ module TranscoderProcessor
     end
 
     def complete?
-      state == FAILED || state == SUCCESSFUL
+      failed? || successful?
+    end
+
+    def changeable?
+      nothing? || enqueued?
     end
 
     STATES.each do |state_name, state_description|

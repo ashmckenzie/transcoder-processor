@@ -25,9 +25,16 @@ module TranscoderProcessor
   module Models
     class MediaFile < Sequel::Model
 
-      # VALIDATIONS HERE
-
+      plugin :validation_helpers
       plugin :timestamps, :update_on_create => true
+
+      def self.for input_file
+        if row = find(input_file: input_file)
+          row
+        else
+          MediaFileNull.new
+        end
+      end
 
       def status
         Status.new(self[:status].to_sym)
@@ -53,14 +60,6 @@ module TranscoderProcessor
         Pathname.new(self[:output_file])
       end
 
-      def self.for input_file
-        if row = where(input_file: input_file).first
-          row
-        else
-          MediaFileNull.new
-        end
-      end
-
       def unqueue!
         if status.enqueued?
           if Sidekiq::Queue.new.find_job(job_id).delete
@@ -71,12 +70,14 @@ module TranscoderProcessor
         end
       end
 
-      def self.enqueue! input_file, output_file
-        record = create(
-          input_file:       input_file,
-          input_file_size:  Pathname.new(input_file).size,
-          output_file:      output_file
-        )
+      def self.transcode! input_file, output_file
+        unless record = find(input_file: input_file)
+          record = create(
+            input_file:       input_file,
+            input_file_size:  Pathname.new(input_file).size,
+            output_file:      output_file
+          )
+        end
 
         if job_id = Workers::TranscoderWorker.perform_async(record.id)
           record.update(

@@ -29,7 +29,12 @@ class WebApp < Sinatra::Base
   end
 
   post '/transcode' do
-    TranscoderProcessor::Media::File.new(params[:file]).enqueue!
+    TranscoderProcessor::Media::File.new(params[:file]).transcode!
+    ''
+  end
+
+  post '/cancel-transcode' do
+    TranscoderProcessor::Models::MediaFile.find(id: params[:id]).unqueue!
     ''
   end
 
