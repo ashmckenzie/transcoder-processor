@@ -34,6 +34,7 @@ gem 'time_diff'
 
 group :development do
   gem 'pry', require: false
+  gem 'pry-debugger', require: false
   gem 'better_errors', require: false
   gem 'binding_of_caller', require: false
 end
