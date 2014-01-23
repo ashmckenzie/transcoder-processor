@@ -41,14 +41,14 @@ module TranscoderProcessor
         Models::MediaFile.transcode!(self)
       end
 
+      def media_file
+        Models::MediaFile.for(self)
+      end
+
       private
 
         def download_dir
           TranscoderProcessor::Config.instance.downloads.dir
-        end
-
-        def media_file
-          Models::MediaFile.for(self)
         end
     end
   end
