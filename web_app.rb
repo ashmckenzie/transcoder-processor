@@ -30,6 +30,7 @@ class WebApp < Sinatra::Base
 
   post '/transcode' do
     TranscoderProcessor::Media::File.new(params[:file]).transcode!
+    ''
   end
 
   get '/about' do

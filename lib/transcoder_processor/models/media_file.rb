@@ -1,3 +1,5 @@
+# TranscoderProcessor::Database.instance.connection.drop_table :media_files
+
 # TranscoderProcessor::Database.instance.connection.create_table :media_files do
 #   primary_key :id
 

@@ -1,3 +1,5 @@
+require 'pathname'
+
 module TranscoderProcessor
   module Media
     class Transcoder
@@ -11,33 +13,60 @@ module TranscoderProcessor
       end
 
       def execute!
-        # FIXME: this isn't great
-        media_file.update(
-          status:                 Status::WORKING,
-          started_processing_at:  Time.now
-        )
-
-        output = `#{command}`
-        exit_code = $?
-
-        response = Response.new(output, exit_code)
-
-        # FIXME: this isn't great
-        status = response.success? ? Status::SUCCESSFUL : Status::FAILED
-
-        media_file.update(
-          status:                 status,
-          job_exit_code:          exit_code,
-          job_output:             output,
-          finished_processing_at: Time.now
-        )
-
+        register_start!
+        response = Executor.new(command).execute!
+        register_finish!(response)
         response
       end
 
       private
 
         attr_reader :media_file
+
+        def register_start!
+          media_file.update(
+            status:                 Status::WORKING,
+            started_processing_at:  Time.now
+          )
+        end
+
+        def register_finish! response
+          media_file.update(
+            output_file_size:       output_file_size,
+            status:                 response.status,
+            job_exit_code:          response.exit_code,
+            job_output:             response.output,
+            finished_processing_at: Time.now
+          )
+        end
+
+        def output_file_size
+          if response.success?
+            Pathname.new(media_file.output_file).size
+          else
+            0
+          end
+        rescue => e
+          0
+        end
+    end
+
+    class Executor
+
+      def initialize command
+        @command = command
+      end
+
+      def execute!
+        output = `#{command}`
+        exit_code = $?
+
+        Response.new(output, exit_code)
+      end
+
+      private
+
+        attr_reader :command
     end
 
     class Response
@@ -51,6 +80,10 @@ module TranscoderProcessor
 
       def success?
         exit_code.success?
+      end
+
+      def status
+        success? ? Status::SUCCESSFUL : Status::FAILED
       end
     end
   end

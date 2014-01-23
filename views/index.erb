@@ -19,14 +19,16 @@
             <td><%= file.size %></td>
             <td><%= file.status.description %></td>
             <td class="span1">
-              <div class="btn-group pull-right">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#" class="transcode">Transcode</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#" class="delete">Delete</a></li>
-                </ul>
-              </div>
+              <%- if file.status.nothing? %>
+                <div class="btn-group pull-right" data-file="<%= file.file.to_s %>">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Action<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class="transcode">Transcode</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" class="delete">Delete</a></li>
+                  </ul>
+                </div>
+              <%- end %>
             </td>
           </tr>
         <%- end %>
