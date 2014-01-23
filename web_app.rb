@@ -29,7 +29,7 @@ class WebApp < Sinatra::Base
   end
 
   post '/transcode' do
-    TranscoderProcessor::Media::File.new(params[:file]).transcode!
+    TranscoderProcessor::Media::File.new(params[:file]).enqueue!
     ''
   end
 

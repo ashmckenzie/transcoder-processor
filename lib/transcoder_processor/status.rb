@@ -10,7 +10,7 @@ module TranscoderProcessor
     }
 
     STATES.each do |state_name, state_description|
-      const_set(state_name.upcase, state_description.to_sym)
+      const_set(state_name.upcase, state_name.to_sym)
     end
 
     attr_reader :state

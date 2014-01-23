@@ -61,7 +61,17 @@ module TranscoderProcessor
         end
       end
 
-      def self.transcode! input_file, output_file
+      def unqueue!
+        if status.enqueued?
+          if Sidekiq::Queue.new.find_job(job_id).delete
+            update(status: Status::NOTHING)
+          end
+        else
+          raise "Not enqueued! (#{})"
+        end
+      end
+
+      def self.enqueue! input_file, output_file
         record = create(
           input_file:       input_file,
           input_file_size:  Pathname.new(input_file).size,

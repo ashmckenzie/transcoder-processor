@@ -32,6 +32,14 @@ module TranscoderProcessor
         media_file.status
       end
 
+      def started_processing_at
+        media_file.started_processing_at
+      end
+
+      def finished_processing_at
+        media_file.finished_processing_at
+      end
+
       def transcode!
         Models::MediaFile.transcode!(file.to_s, output_file)
       end
