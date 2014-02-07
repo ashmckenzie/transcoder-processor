@@ -10,7 +10,7 @@ module TranscoderProcessor
       end
 
       def command
-        %Q{HandBrakeCLI --format mkv --encoder x264 --vb 1500 --audio English --subtitle English --vfr --two-pass --turbo --input "#{full_input_file}" --output "#{output_file}" 2>&1}
+        %Q{HandBrakeCLI --format mkv --encoder x264 --vb 1500 --native-language eng --vfr --two-pass --turbo --input "#{full_input_file}" --output "#{output_file}" 2>&1}
       end
 
       def execute!
