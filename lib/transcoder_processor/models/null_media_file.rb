@@ -1,3 +1,5 @@
+require 'naught'
+
 module TranscoderProcessor
   module Models
     NullMediaFile = Naught.build do |config|

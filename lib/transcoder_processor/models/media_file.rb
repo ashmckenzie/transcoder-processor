@@ -19,7 +19,6 @@
 # end
 
 require 'pathname'
-require 'naught'
 require 'time_diff'
 
 module TranscoderProcessor
