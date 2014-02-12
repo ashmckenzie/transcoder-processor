@@ -1,4 +1,4 @@
-class BetterFile
+class FileMan
 
   def initialize path
     @path = path

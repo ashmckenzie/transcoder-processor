@@ -1,7 +1,7 @@
 require 'pathname'
 require 'fileutils'
 
-require_relative '../../../better_file'
+require_relative '../../../file_man'
 
 module TranscoderProcessor
   module Media
@@ -71,7 +71,7 @@ module TranscoderProcessor
           end
 
           def output_file_raw
-            BetterFile.new(::File.join(TranscoderProcessor::Config.instance.downloads.tmp_dir, media_file.input_file))
+            FileMan.new(::File.join(TranscoderProcessor::Config.instance.downloads.tmp_dir, media_file.input_file))
           end
 
           def output_file
