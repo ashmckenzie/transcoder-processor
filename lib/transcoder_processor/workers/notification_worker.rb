@@ -1,5 +1,4 @@
 require 'sidekiq'
-require 'pushover_sender'
 
 module TranscoderProcessor
   module Workers
