@@ -1,5 +1,3 @@
-require 'pry'
-
 lib = File.expand_path(File.join('..', '..', 'lib', 'transcoder_processor'), __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 

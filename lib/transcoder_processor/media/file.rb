@@ -29,6 +29,10 @@ module TranscoderProcessor
         media_file.status
       end
 
+      def job_processor
+        media_file.job_processor
+      end
+
       def started_processing_at
         media_file.started_processing_at
       end

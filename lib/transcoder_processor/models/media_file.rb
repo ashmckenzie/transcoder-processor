@@ -33,7 +33,7 @@ module TranscoderProcessor
         if row = find(input_file: file.file_minus_download_dir)
           row
         else
-          MediaFileNull.new
+          NullMediaFile.new
         end
       end
 
@@ -89,14 +89,6 @@ module TranscoderProcessor
         else
           raise 'Ruh roh'
         end
-      end
-    end
-
-    MediaFileNull = Naught.build do |config|
-      config.mimic MediaFile
-
-      def status
-        Status.new
       end
     end
   end

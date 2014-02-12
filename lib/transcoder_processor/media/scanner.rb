@@ -4,7 +4,7 @@ module TranscoderProcessor
   module Media
     class Scanner
 
-      FILE_EXTENSIONS = %w{ mkv avi mp4 mv4 }
+      FILE_EXTENSIONS = %w{ mkv avi mp4 mv4 mov iso }
 
       def initialize dir
         @dir = dir
