@@ -35,7 +35,7 @@ module TranscoderProcessor
           end
 
           def sample_command
-            opts = { start_at: 300, stop_at: 400 }
+            opts = { start_at: 300, stop_at: 120 }
             Command.new(full_input_file, sample_output_file, opts).line
           end
 
