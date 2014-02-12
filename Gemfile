@@ -4,7 +4,6 @@ gem 'god'
 
 gem 'rake'
 
-gem 'serialport'
 gem 'sinatra', require: false
 gem 'sinatra-contrib'
 gem 'rack-cache'

@@ -83,7 +83,6 @@ GEM
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
     sequel (4.4.0)
-    serialport (1.2.1)
     sidekiq (2.17.3)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
@@ -141,7 +140,6 @@ DEPENDENCIES
   redis
   redis-namespace
   sequel
-  serialport
   sidekiq
   sidekiq-failures
   sinatra
