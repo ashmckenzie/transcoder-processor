@@ -19,7 +19,7 @@ gem 'puma'
 gem 'redis'
 gem 'redis-namespace'
 
-gem 'pushover_sender', github: 'ashmckenzie/pushover-sender', branch: '4812e194c2139638ce5dabb7caf5fa42158377ff'
+# gem 'pushover_sender', github: 'ashmckenzie/pushover-sender', branch: '4812e194c2139638ce5dabb7caf5fa42158377ff'
 
 gem 'filesize'
 
