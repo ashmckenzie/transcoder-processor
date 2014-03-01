@@ -15,13 +15,13 @@ module TranscoderProcessor
         def execute!
           response = ResponseChain.new
 
-          register_start!
+          # register_start!
           ensure_output_directory_exists!
 
           response << Executor.new(command).execute!
           response << Executor.new(sample_command).execute!
 
-          register_finish!(response)
+          # register_finish!(response)
 
           response
         end
@@ -31,12 +31,16 @@ module TranscoderProcessor
           attr_reader :media_file
 
           def command
-            Command.new(full_input_file, output_file).line
+            x = Command.new(full_input_file, output_file).line
+            ap x
+            x
           end
 
           def sample_command
             opts = { start_at: 300, stop_at: 120 }
-            Command.new(full_input_file, sample_output_file, opts).line
+            x = Command.new(full_input_file, sample_output_file, opts).line
+            ap x
+            x
           end
 
           def nodename

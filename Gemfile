@@ -32,6 +32,7 @@ gem 'naught'
 gem 'time_diff'
 
 group :development do
+  gem 'awesome_print'
   gem 'pry', require: false
   gem 'pry-debugger', require: false
   gem 'better_errors', require: false

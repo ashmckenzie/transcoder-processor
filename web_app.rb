@@ -10,6 +10,9 @@ require_relative './config/initialise'
 class WebApp < Sinatra::Base
 
   configure :development do
+    require 'pry'
+    require 'awesome_print'
+
     register Sinatra::Reloader
 
     lib_path = File.expand_path(File.join('..', 'lib', 'transcoder_processor', '**', '*.rb'), __FILE__)
