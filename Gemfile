@@ -36,4 +36,5 @@ group :development do
   gem 'pry-debugger', require: false
   gem 'better_errors', require: false
   gem 'binding_of_caller', require: false
+  gem 'debugger-ruby_core_source', '1.3.2'
 end

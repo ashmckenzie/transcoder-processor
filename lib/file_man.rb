@@ -20,7 +20,7 @@ class FileMan
 
   def filename_without_extension
     @filename_without_extension ||= begin
-      path.split('/').last.gsub(/\..+$/, '')
+      path.split('/').last.gsub(/(\.[^.]+$)/, '')
     end
   end
 
