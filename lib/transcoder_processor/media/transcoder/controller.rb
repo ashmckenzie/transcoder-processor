@@ -31,16 +31,12 @@ module TranscoderProcessor
           attr_reader :media_file
 
           def command
-            x = Command.new(full_input_file, output_file).line
-            ap x
-            x
+            Command.new(full_input_file, output_file).line
           end
 
           def sample_command
             opts = { start_at: 300, stop_at: 120 }
-            x = Command.new(full_input_file, sample_output_file, opts).line
-            ap x
-            x
+            Command.new(full_input_file, sample_output_file, opts).line
           end
 
           def nodename
