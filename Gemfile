@@ -37,4 +37,5 @@ group :development do
   gem 'better_errors', require: false
   gem 'binding_of_caller', require: false
   gem 'debugger-ruby_core_source', '1.3.2'
+  gem 'debugger', '1.6.6'
 end
