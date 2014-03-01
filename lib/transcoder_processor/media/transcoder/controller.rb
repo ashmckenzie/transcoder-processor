@@ -15,13 +15,13 @@ module TranscoderProcessor
         def execute!
           response = ResponseChain.new
 
-          # register_start!
+          register_start!
           ensure_output_directory_exists!
 
           response << Executor.new(command).execute!
           response << Executor.new(sample_command).execute!
 
-          # register_finish!(response)
+          register_finish!(response)
 
           response
         end
