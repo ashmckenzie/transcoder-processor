@@ -71,7 +71,7 @@ module TranscoderProcessor
           end
 
           def full_input_file
-            ::File.join(TranscoderProcessor::Config.instance.downloads.dir, media_file.input_file)
+            media_file.input_file
           end
 
           def output_file_raw
@@ -81,13 +81,14 @@ module TranscoderProcessor
           def output_file
             file = output_file_raw
             file.extension = 'mkv'
+            file.filename_without_extension = "#{file.filename_without_extension}.transcoded"
             file.to_s
           end
 
           def sample_output_file
             file = output_file_raw
             file.extension = 'mkv'
-            file.filename_without_extension = "#{file.filename_without_extension}-sample"
+            file.filename_without_extension = "#{file.filename_without_extension}.sample"
             file.to_s
           end
 
