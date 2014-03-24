@@ -67,7 +67,7 @@ module TranscoderProcessor
           end
 
           def full_input_file
-            media_file.input_file
+            ::File.join(Config.instance.downloads.dir, media_file.input_file)
           end
 
           def output_file_raw
